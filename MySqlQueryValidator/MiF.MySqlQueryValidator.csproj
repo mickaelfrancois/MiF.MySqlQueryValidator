@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net9.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<Nullable>enable</Nullable>
+		<Title>$(AssemblyName)</Title>
+		<Authors>Mickaël FRANCOIS</Authors>
+		<Description>A .NET/C# MySQL/MariaDB SQL query analyser.</Description>
+		<PackageProjectUrl>https://github.com/mickaelfrancois/MiF.MySqlQueryValidator</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/mickaelfrancois/MiF.MySqlQueryValidator</RepositoryUrl>
+		<PackageTags>MySQL, MariaDB, SQL, analyser, ANTLR</PackageTags>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageIcon>nuget_logo.png</PackageIcon>
+		<RepositoryType>GIT</RepositoryType>
+		<Copyright>Mickaël FRANCOIS - 2025</Copyright>
+		<Version>1.0.0</Version>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="./README.md" Pack="true" PackagePath="\"/>
+		<None Include="./nuget_logo.png" Pack="true" PackagePath="\"/>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Antlr4.Runtime.Standard" Version="4.13.1" />
+	</ItemGroup>
+
+</Project>

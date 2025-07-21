@@ -1,0 +1,11 @@
+@HostAddress = http://localhost:5130
+
+POST {{HostAddress}}/Analyse/
+Accept: application/json
+Content-Type: application/json
+
+{
+  "Sql": "SEdLECT 1 FROM users"
+}
+
+###

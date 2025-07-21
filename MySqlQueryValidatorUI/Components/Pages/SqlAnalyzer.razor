@@ -1,0 +1,80 @@
+﻿@page "/"
+@using MiF.MySqlQueryValidator.Analysers
+@using MiF.MySqlQueryValidator.Models
+@using Microsoft.JSInterop
+@using MiF.MySqlQueryValidator
+
+@inject IJSRuntime Js
+@inject IConfiguration Configuration
+
+<h3>SQL Query analyser for MySQL</h3>
+<hr/>
+<p>
+    This tool allows you to analyse SQL queries for MySQL databases. It can determine the type of query, whether it is a DDL or non-query, and extract table names.
+    </p>
+
+<div style="display: flex; align-items: flex-start; gap: 2rem;">
+    <div style="flex: 1;">
+        <textarea @bind="QueryText" rows="15" cols="80" class="form-control"></textarea>
+        <br />
+        <button class="btn btn-primary" @onclick="Analyser">Analyser</button>
+    </div>
+
+    <div style="flex: 1; min-width: 350px;">
+        @if (Results is not null)
+        {
+            <div class="mt-4">
+                <b>Valid: </b> @(Results.IsValid ? "✅" : "❌")<br />
+                <b>Single query: </b> @(Results.IsSingleQuery ? "✅" : "❌")<br />
+
+                @foreach (SqlSegment query in Results.QueryStatements)
+                {
+                    <hr />
+                    <div class="border p-3 mb-2">
+                        <pre><code class="language-sql">@query.OriginalText</code></pre>
+                        <b>Category: </b> @query.QueryCategory<br />
+                        <b>Type: </b> @query.QueryType<br />
+                        <b>Tables: </b> @string.Join(", ", query.Tables)<br />
+                        <b>DDL: </b> @(query.IsDDLQuery ? "✅" : "❌")<br />
+                        <b>NonQuery: </b> @(query.IsNonQuery ? "✅" : $"❌")
+                    </div>
+                }
+            </div>
+        }
+
+        @if (!string.IsNullOrEmpty(ErrorMessage))
+        {
+            <div class="alert alert-danger">
+                <strong>Error:</strong> @ErrorMessage
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+    private string QueryText = "";
+    private QueryInformations Results = default!;
+    private string ErrorMessage = "";
+
+    private void Analyser()
+    {
+        MySqlQueryAnalyzer queryAnalyzer = new();
+
+        try
+        {
+            Results = queryAnalyzer.AnalyseQuery(QueryText);
+        }        
+        catch (Exception ex)
+        {
+            ErrorMessage = ex.Message;
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (Results is not null)
+        {
+            await Js.InvokeVoidAsync("Prism.highlightAll");
+        }
+    }
+}

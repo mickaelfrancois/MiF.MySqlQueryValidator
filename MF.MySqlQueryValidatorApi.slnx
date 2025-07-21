@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/Core/">
+    <Project Path="MySqlQueryValidator/MiF.MySqlQueryValidator.csproj" />
+  </Folder>
+  <Folder Name="/Presentation/">
+    <Project Path="MF.MySqlQueryValidatorApi/MySqlQueryValidatorApi.csproj" />
+    <Project Path="MySqlQueryValidatorUI/MySqlQueryValidatorUI.csproj" />
+  </Folder>
+  <Folder Name="/Tests/">
+    <Project Path="MySqlQueryValidator.UnitTests/MySqlQueryValidator.UnitTests.csproj" />
+  </Folder>
+</Solution>
